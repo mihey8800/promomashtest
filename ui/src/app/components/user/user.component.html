@@ -1,0 +1,7 @@
+<!-- user-page.component.html -->
+<div *ngIf="user$ | async as user">
+    <h1>Welcome, {{ user.email }}</h1>
+    <p>Country: {{ user.country }}</p>
+    <p>Province: {{ user.province }}</p>
+    <button (click)="logout()">Logout</button>
+</div>

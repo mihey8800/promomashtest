@@ -1,0 +1,40 @@
+﻿version: '3.4'
+
+services:
+  promomash.ui:
+    build:
+      context: .
+      dockerfile: ui/Dockerfile
+    ports:
+      - '801:4200'
+  
+  promomash.host:
+    image: ${DOCKER_REGISTRY-}promomashhost
+    build:
+      context: .
+      dockerfile: api/src/Promomash.Host/Dockerfile
+    depends_on:
+      - promomash.postgres
+    ports:
+      - "50002:8080"
+      - "50003:8081"
+
+  # база
+  promomash.postgres:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '54322:5432'
+    volumes:
+      - promomash.db.data:/var/lib/postgresql
+
+volumes:
+  promomash.db.data:
+    driver: local
+
+networks:
+  default:
+    driver: bridge

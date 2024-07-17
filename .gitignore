@@ -1,0 +1,15 @@
+.vs/
+
+obj/
+bin/
+
+
+.idea/
+EqvantaLab.CreditLimits/src/EqvantaLab.CreditLimits.Host/appsettings.local.json
+EqvantaLab.CreditLimits/src/EqvantaLab.CreditLimits.Host/files/swagger_rus.json
+EqvantaLab.CreditLimits/src/EqvantaLab.CreditLimits.Host/files/swagger_eng.json
+EqvantaLab.CreditLimits/src/EqvantaLab.CreditLimits.Host/dotMemoryclt/
+.run/docker-compose.yml_ Compose Deployment.run.xml
+/ui/.angular
+/ui/.vscode
+/ui/node_modules

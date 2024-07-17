@@ -1,0 +1,10 @@
+export * from './auth.service';
+import { AuthService } from './auth.service';
+export * from './auth.serviceInterface';
+export * from './country.service';
+import { CountryService } from './country.service';
+export * from './country.serviceInterface';
+export * from './province.service';
+import { ProvinceService } from './province.service';
+export * from './province.serviceInterface';
+export const APIS = [AuthService, CountryService, ProvinceService];
