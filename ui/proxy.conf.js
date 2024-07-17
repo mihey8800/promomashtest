@@ -1,7 +1,7 @@
 
 var PROXY_CONF = {
     '/api/**': {
-        target: 'http://localhost:5158',
+        target: 'http://promomash.host:8080',
         secure: false,
         changeOrigin: true,
         logLevel: 'debug',

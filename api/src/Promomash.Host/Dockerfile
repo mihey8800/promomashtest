@@ -1,4 +1,3 @@
-# Use a specific base image that includes the self-signed certificate
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 RUN apt-get update && apt-get install -y telnet net-tools nano curl jq && \
     rm -rf /var/lib/apt/lists/*
@@ -12,17 +11,18 @@ RUN printf "\n[system_default_sect]\nMinProtocol = TLSv1.2\nCipherString = DEFAU
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["api/src/Promomash.Host/Promomash.Host.csproj", "Promomash/src/Promomash.Host/"]
-COPY ["api/src/Promomash.Infrastructure/Promomash.Infrastructure.csproj", "Promomash/src/Promomash.Infrastructure/"]
-COPY ["api/src/Promomash.Domain/Promomash.Domain.csproj", "Promomash/src/Promomash.Domain/"]
-COPY ["api/src/Promomash.EntityFramework/Promomash.EntityFramework.csproj", "Promomash/src/Promomash.EntityFramework/"]
-RUN dotnet restore "api/src/Promomash.Host/Promomash.Host.csproj"
+COPY ["api/src/Promomash.Host/Promomash.Host.csproj", "Promomash.Host/"]
+COPY ["api/src/Promomash.Infrastructure/Promomash.Infrastructure.csproj", "Promomash.Infrastructure/"]
+COPY ["api/src/Promomash.Domain/Promomash.Domain.csproj", "Promomash.Domain/"]
+COPY ["api/src/Promomash.Application/Promomash.Application.csproj", "Promomash.Application/"]
+COPY ["api/src/Promomash.EntityFramework/Promomash.EntityFramework.csproj", "Promomash.EntityFramework/"]
+RUN dotnet restore "Promomash.Host/Promomash.Host.csproj"
 COPY . .
-WORKDIR "Promomash/src/Promomash.Host"
+WORKDIR "/src/Promomash.Host"
+
 RUN dotnet build "Promomash.Host.csproj" -c Release -o /app/build
 
 FROM build AS publish
-
 RUN dotnet publish "Promomash.Host.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
